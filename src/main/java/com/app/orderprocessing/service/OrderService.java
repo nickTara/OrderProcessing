@@ -1,7 +1,7 @@
 package com.app.orderprocessing.service;
 
-import com.app.orderprocessing.models.Customer;
-import com.app.orderprocessing.models.Order;
+import com.app.orderprocessing.entities.Customer;
+import com.app.orderprocessing.entities.Order;
 import com.app.orderprocessing.models.OrderStatus;
 import com.app.orderprocessing.repositories.CustomerRepository;
 import com.app.orderprocessing.repositories.OrderRepository;
@@ -31,8 +31,8 @@ public class OrderService {
         if (null == customerId || null == customerName) {
             throw new IllegalArgumentException("Fields are missing");
         }
-        Integer existingCustomer = customerRepository.findCustomer(customerId, customerName);
-        if (existingCustomer != 0) {
+        Optional<Customer> existingCustomer = customerRepository.findById(customerId);
+        if (existingCustomer.isPresent()) {
             throw new DuplicateRequestException("Duplicate Found!");
         }
         Customer customer = new Customer(customerId, customerName);
@@ -40,11 +40,11 @@ public class OrderService {
         return customer;
     }
 
-    public Order placeOrder(String customerId) {
+    public Order placeOrder(String customerId, List<String> items) {
         if (null == customerId) {
             throw new IllegalArgumentException("Fields are missing");
         }
-        Order order = new Order(UUID.randomUUID().toString(), OrderStatus.PLACED.toString(), customerId);
+        Order order = new Order(UUID.randomUUID().toString(), OrderStatus.PLACED.toString(), items, customerId);
         orderRepository.save(order);
         return order;
     }
@@ -53,31 +53,24 @@ public class OrderService {
         if (null == customerId) {
             throw new NoSuchElementException("CustomerId not present");
         }
-        Optional<Customer> customer = customerRepository.findById(customerId);
-        if (customer.isPresent()) {
-            return customer;
-        }
-        return null;
+        return customerRepository.findById(customerId);
+
     }
 
     public Optional<Order> getOrderById(String orderId) {
         if (null == orderId) {
             throw new NoSuchElementException("OrderID not present");
         }
-        Optional<Order> order = orderRepository.findById(orderId);
-        if (order.isPresent()) {
-            return order;
-        }
-        return null;
+        return orderRepository.findById(orderId);
     }
 
     // order status will get updated as cancelled but order will be there.
     public Order cancelOrder(String orderId) {
-        if (null == orderId) {
+        if (!orderId.isEmpty()) {
             Optional<Order> order = orderRepository.findById(orderId);
             if (order.isPresent()) {
                 Order orderexisting = order.get();
-                Order updatedOrder = new Order(orderexisting.getOrderId(), OrderStatus.CANCELLED.toString(), orderexisting.getCustomerId());
+                Order updatedOrder = new Order(orderexisting.getOrderId(), OrderStatus.CANCELLED.toString(), orderexisting.getItems(), orderexisting.getCustomerId());
                 orderRepository.save(updatedOrder);
                 return updatedOrder;
             }

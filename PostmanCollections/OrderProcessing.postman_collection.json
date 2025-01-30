@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "2a015199-208a-4321-80d3-83f50aecd8bf",
+		"name": "OrderProcessing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32168514"
+	},
+	"item": [
+		{
+			"name": "createCustomer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customerId\": \"12345\",\n    \"customerName\": \"Yogesh\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/createCustomer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"createCustomer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "placeOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"customerId\": \"12345\",\n  \"items\": [\n    \"Shampoo\",\n    \"biscuit\"\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081//placeOrder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"",
+						"placeOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetOrderbyId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/getOrderById/f47ac10b-58cc-4372-a567-0e02b2c3d479",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"getOrderById",
+						"f47ac10b-58cc-4372-a567-0e02b2c3d479"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCustomerById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/getCustomerById/12345",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"getCustomerById",
+						"12345"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllOrdersByCustomer",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/getAllOrdersByCustomer/12345",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"getAllOrdersByCustomer",
+						"12345"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cancelOrder",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081//cancelOrder/f47ac10b-58cc-4372-a567-0e02b2c3d479",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"",
+						"cancelOrder",
+						"f47ac10b-58cc-4372-a567-0e02b2c3d479"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

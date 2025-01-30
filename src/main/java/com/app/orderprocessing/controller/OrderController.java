@@ -1,7 +1,8 @@
 package com.app.orderprocessing.controller;
 
-import com.app.orderprocessing.models.Customer;
-import com.app.orderprocessing.models.Order;
+import com.app.orderprocessing.entities.Customer;
+import com.app.orderprocessing.entities.Order;
+import com.app.orderprocessing.models.PlaceOrderRequest;
 import com.app.orderprocessing.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,17 +37,17 @@ public class OrderController {
     }
 
     @PostMapping(value = "/placeOrder", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> placeOrder(@RequestBody Customer payload)  {
+    public ResponseEntity<Object> placeOrder(@RequestBody PlaceOrderRequest payload)  {
         Order order = null;
         try {
-            order = orderService.placeOrder(payload.getCustomerId());
+            order = orderService.placeOrder(payload.getCustomerId(), payload.getItems());
         } catch(Exception ex){
             return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/cancelOrder/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/cancelOrder/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> cancelOrder(@PathVariable String orderId)  {
         Order order = null;
         try {

@@ -1,4 +1,4 @@
-package com.app.orderprocessing.models;
+package com.app.orderprocessing.entities;
 
 
 import lombok.*;
