@@ -3,7 +3,6 @@ package com.app.orderprocessing.controller;
 import com.app.orderprocessing.models.Customer;
 import com.app.orderprocessing.models.Order;
 import com.app.orderprocessing.service.OrderService;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 
@@ -47,8 +47,19 @@ public class OrderController {
     }
 
     @GetMapping(value = "/getCustomerById/{Id}")
-    public Customer getCustomerById(@PathVariable String customerId) {
+    public Optional<Customer> getCustomerById(@PathVariable String customerId) {
         return orderService.getCustomerById(customerId);
     }
+
+    @GetMapping(value = "/getOrderById/{Id}")
+    public Optional<Order> getOrderById(@PathVariable String orderId) {
+        return orderService.getOrderById(orderId);
+    }
+
+    @GetMapping(value = "/getAllOrdersByCustomer/{Id}")
+    public List<String> getAllOrdersByCustomerId(@PathVariable String customerId) {
+        return orderService.getAllOrdersByCustomer(customerId);
+    }
+
 
 }

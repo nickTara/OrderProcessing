@@ -9,8 +9,9 @@ import com.sun.jdi.request.DuplicateRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.naming.NameNotFoundException;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -48,10 +49,21 @@ public class OrderService {
         return order;
     }
 
-    public Customer getCustomerById(String customerId) {
+    public Optional<Customer> getCustomerById(String customerId) {
         if(null == customerId){
             throw new NoSuchElementException("CustomerId not present");
         }
         return customerRepository.findById(customerId);
+    }
+
+    public Optional<Order> getOrderById(String orderId) {
+        if(null == orderId){
+            throw new NoSuchElementException("OrderID not present");
+        }
+        return orderRepository.findById(orderId);
+    }
+
+    public List<String> getAllOrdersByCustomer(String customerId) {
+        return orderRepository.findAllOrdersByCustomerId(customerId);
     }
 }
