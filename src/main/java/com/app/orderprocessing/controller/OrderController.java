@@ -46,14 +46,33 @@ public class OrderController {
         return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/cancelOrder/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> cancelOrder(@PathVariable String orderId)  {
+        Order order = null;
+        try {
+            order = orderService.cancelOrder(orderId);
+        } catch(Exception ex){
+            return new ResponseEntity<>(Map.of("message", ex.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(order, HttpStatus.CREATED);
+    }
+
     @GetMapping(value = "/getCustomerById/{Id}")
-    public Optional<Customer> getCustomerById(@PathVariable String customerId) {
-        return orderService.getCustomerById(customerId);
+    public ResponseEntity<Object> getCustomerById(@PathVariable String customerId) {
+        Optional<Customer> customerById = orderService.getCustomerById(customerId);
+        if(customerById.isPresent()){
+            return new ResponseEntity<>(customerById, HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(value = "/getOrderById/{Id}")
-    public Optional<Order> getOrderById(@PathVariable String orderId) {
-        return orderService.getOrderById(orderId);
+    public ResponseEntity<Object> getOrderById(@PathVariable String orderId) {
+         Optional<Order> order = orderService.getOrderById(orderId);
+         if(order.isPresent()){
+             return new ResponseEntity<>(order, HttpStatus.FOUND);
+         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(value = "/getAllOrdersByCustomer/{Id}")
