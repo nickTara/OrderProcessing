@@ -12,12 +12,13 @@ It consists of several API operations to create customer, place orders and retre
 4. MongoDB(7.0)
 
 # Project Structure
-This project comprises 4 main packages (below are the links to their READMEs):
-* [Controller](src/main/java/com/app/orderprocessing/controller)
-* [Models](src/main/java/com/app/orderprocessing/models)
-* [Repositories](src/main/java/com/app/orderprocessing/repositories)
-* [Service](src/main/java/com/app/orderprocessing/service)
-* [OrderProcessingApplication](src/main/java/com/app/orderprocessing/OrderprocessingApplication.java) main funstion to run application.
+This project comprises 5 main packages (below are the links to their READMEs):
+* [Controller](src/main/java/com/app/orderprocessing/controller)  Entry point of all endpoints
+* [Models](src/main/java/com/app/orderprocessing/models) Other Helper Model classes
+* [Entities](src/main/java/com/app/orderprocessing/entities) Database documents
+* [Repositories](src/main/java/com/app/orderprocessing/repositories) Database Mapping
+* [Service](src/main/java/com/app/orderprocessing/service) Business logic 
+* [OrderProcessingApplication](src/main/java/com/app/orderprocessing/OrderprocessingApplication.java) main function to run application.
 
 ###  Running the Application Locally
    
